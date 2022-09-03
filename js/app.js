@@ -13,8 +13,8 @@ const seatAllCetagorys = (categories) => {
     for (const categorie of categories) {
         // console.log(categorie.category_id)
         const li = document.createElement("li");
-        // li.classList.add('text-decoration-none')
-        li.innerHTML = `<a onclick="showAllNewsData('${categorie.category_id}')">${categorie.category_name}</a>`;
+        li.classList.add('list-unstyled', 'border', 'border-dark', 'rounded', 'px-2')
+        li.innerHTML = `<a  onclick="showAllNewsData('${categorie.category_id}')">${categorie.category_name}</a>`;
         setCategories.appendChild(li);
 
     }
@@ -30,6 +30,12 @@ const showAllNewsData = (category_id) => {
 }
 const showAllNews = data => {
     // console.log(data)
+    data.sort((a, b) => {
+        return b.total_view - a.total_view
+    })
+    // console.log(data)
+
+
     const resultFound = document.getElementById('result-found');
     resultFound.innerHTML = `<p class="text-center fs-3 fst-italic text-info">Totat News Found:${data.length}</p>`
     const newsContainer = document.getElementById('news-container');
@@ -46,6 +52,14 @@ const showAllNews = data => {
                 image_url
             } = news;
             // console.log(_id)
+            // const viewArray= total_view;
+            // // if (viewArray.indexOf(total_view) === -1) {
+            // //     viewArray.push(total_view);
+            // // }
+            // viewArray.sort(function (a, b) {
+            //     return b - a
+            // });
+            // console.log(viewArray)
             const div = document.createElement('div')
             div.innerHTML = `<div class="row g-0">
     <div class="col-md-4">
@@ -64,7 +78,7 @@ const showAllNews = data => {
             <p>${author.published_date?author.published_date:'no data found'}</p>
             </div>
             <div>
-             <h6>View:${total_view}</h6>
+             <h6>View:${total_view?total_view:'no data found'}</h6>
             </div>
            <div>
             <button onclick="loadModalDetalis('${_id}')" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#authorDetalisModal">
