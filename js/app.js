@@ -51,7 +51,7 @@ const showAllNews = data => {
             <img class="rounded-circle w-25 h-25 " src="${author.img?author.img:'No image Found'}">
             <p>${author.name?author.name:'no data found'} Total-View: ${total_view}</p>
             
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#authorDetalisModal">
+            <button onclick="modalDetalis(.this)" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#authorDetalisModal">
            Detalis
             </button>
              </div>
@@ -64,6 +64,7 @@ const showAllNews = data => {
         });
 
 }
+
 showAllNewsData()
 loadAllCetagorys()
 // const loadAllNews = (newsId) => {
@@ -82,3 +83,27 @@ loadAllCetagorys()
 //         total_view
 //     } = data;
 // }
+
+// const modalBody = document.getElementById('modal-body')
+// const Div = document.createElement('div')
+// Div.innerHTML = `
+//     <div class="modal fade" id="authorDetalisModal" tabindex="-1" aria-labelledby="authorDetalisModalLabel"
+//     aria-hidden="true">
+//     <div class="modal-dialog">
+//         <div class="modal-content">
+//             <div class="modal-header">
+//                 <h5 class="modal-title" id="authorDetalisModalLabel">Modal title</h5>
+//                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+//             </div>
+//             <div class="modal-body">
+//                 ...
+//             </div>
+//             <div class="modal-footer">
+//                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+//                 <button type="button" class="btn btn-primary">Save changes</button>
+//             </div>
+//         </div>
+//     </div>
+// </div>
+//     `
+// modalBody.appendChild(div)
