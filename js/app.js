@@ -51,11 +51,10 @@ const showAllNews = data => {
             <img class="rounded-circle w-25 h-25 " src="${author.img?author.img:'No image Found'}">
             <p>${author.name?author.name:'no data found'} Total-View: ${total_view}</p>
             
-            <P> </p>
-
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#authorDetalisModal">
+           Detalis
+            </button>
              </div>
-            
-            
         </div>
     </div>
 </div>
