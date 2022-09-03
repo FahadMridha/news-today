@@ -49,13 +49,18 @@ const showAllNews = data => {
         <div class="card-body">
             <h5 class="card-title">${title}</h5>
             <p class="card-text">${details.length>500?details.slice(0,400)+ '..'+'See more...':details}</p>
-            <div class="d-flex justify-content-between">
+            <div class="d-flex justify-content-center ">
             <div>
-            <div><img style="height:10%;width:10%;" class="rounded-circle" src="${author.img?author.img:'No image Found'}"></div>
+            <div>
+            <img style="height:10%;width:10%;" class="rounded-circle" src="${author.img?author.img:'No image Found'}">
+            </div>
             <p>${author.name?author.name:'no data found'}</p>
-            <div><p>Total-View: ${total_view}</p></div>
+            <p>${author.published_date?author.published_date:'no data found'}</p>
             </div>
             <div>
+             <h6>View:${total_view}</h6>
+            </div>
+           <div>
             <button onclick="loadModalDetalis('${_id}')" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#authorDetalisModal">
             Detalis
              </button>
@@ -83,7 +88,8 @@ const displayNews = (data) => {
         thumbnail_url,
         author,
         title,
-        total_view
+        total_view,
+        image_url
     } = data;
     const modalBody = document.getElementById('modal-body');
     modalBody.textContent = ' ';
@@ -92,8 +98,19 @@ const displayNews = (data) => {
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     <h5 class="modal-title" id="authorDetalisModalLabel">${title}</h5>
                     <div>
-                    <img src="${thumbnail_url}" class="img-fluid rounded-start" alt="..."></div>
+                    <img src="${image_url}" class="img-fluid rounded-start" alt="..."></div>
                     <p class="card-text">${details.length>300?details.slice(0,300)+ '..'+'...':details}</p>
+                    <div class="d-flex justify-content-center ">
+            <div>
+            <div>
+            <img style="height:10%;width:10%;" class="rounded-circle" src="${author.img?author.img:'No image Found'}">
+            </div>
+            <p>${author.name?author.name:'no data found'}</p>
+            <p>${author.published_date?author.published_date:'no data found'}</p>
+            </div>
+            <div>
+             <h6>View:${total_view}</h6>
+            </div>
 
                     
     
