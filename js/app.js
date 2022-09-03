@@ -23,7 +23,7 @@ const showAllNewsData = (category_id) => {
         .then(data => showAllNews(data.data))
 }
 const showAllNews = data => {
-    console.log(data)
+    // console.log(data)
     const resultFound = document.getElementById('result-found');
     resultFound.innerHTML = `<p class="text-center fs-3 fst-italic text-info">Totat News Found:${data.length}</p>`
     const newsContainer = document.getElementById('news-container');
@@ -32,12 +32,14 @@ const showAllNews = data => {
             // console.log(news)
             const {
                 details,
+                _id,
                 thumbnail_url,
                 author,
                 title,
                 total_view,
                 image_url
             } = news;
+            // console.log(_id)
             const div = document.createElement('div')
             div.innerHTML = `<div class="row g-0">
     <div class="col-md-4">
@@ -47,63 +49,59 @@ const showAllNews = data => {
         <div class="card-body">
             <h5 class="card-title">${title}</h5>
             <p class="card-text">${details.length>500?details.slice(0,400)+ '..'+'See more...':details}</p>
-            <div class="card-footer text-muted">
-            <img class="rounded-circle w-25 h-25 " src="${author.img?author.img:'No image Found'}">
-            <p>${author.name?author.name:'no data found'} Total-View: ${total_view}</p>
-            
-            <button onclick="modalDetalis(.this)" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#authorDetalisModal">
-           Detalis
-            </button>
+            <div class="d-flex justify-content-between">
+            <div>
+            <div><img style="height:10%;width:10%;" class="rounded-circle" src="${author.img?author.img:'No image Found'}"></div>
+            <p>${author.name?author.name:'no data found'}</p>
+            <div><p>Total-View: ${total_view}</p></div>
+            </div>
+            <div>
+            <button onclick="loadModalDetalis('${_id}')" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#authorDetalisModal">
+            Detalis
+             </button>
+             </div>
              </div>
         </div>
     </div>
 </div>
-    
     `;
             newsContainer.appendChild(div)
         });
 
 }
+const loadModalDetalis = news_id => {
+    // console.log(news_id)
+    const url = `https://openapi.programming-hero.com/api/news/${news_id}`;
+    fetch(url)
+        .then(res => res.json())
+        .then(data => displayNews(data.data[0]))
+}
+const displayNews = (data) => {
+    console.log(data);
+    const {
+        details,
+        thumbnail_url,
+        author,
+        title,
+        total_view
+    } = data;
+    const modalBody = document.getElementById('modal-body');
+    modalBody.textContent = ' ';
+    const div = document.createElement('div')
+    div.innerHTML = `
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <h5 class="modal-title" id="authorDetalisModalLabel">${title}</h5>
+                    <div>
+                    <img src="${thumbnail_url}" class="img-fluid rounded-start" alt="..."></div>
+                    <p class="card-text">${details.length>300?details.slice(0,300)+ '..'+'...':details}</p>
 
+                    
+    
+    `
+    modalBody.appendChild(div)
+}
 showAllNewsData()
 loadAllCetagorys()
 // const loadAllNews = (newsId) => {
 //     const url = ` https://openapi.programming-hero.com/api/news/0282e0e58a5c404fbd15261f11c2ab6a`
 //     fetch(url)
-//         .then(res => res.json())
-//         .then(data => displayNews(data.data[0]))
-// }
-// const displayNews = (data) => {
-//     // console.log(data);
-//     const {
-//         details,
-//         thumbnail_url,
-//         author,
-//         title,
-//         total_view
-//     } = data;
-// }
-
-// const modalBody = document.getElementById('modal-body')
-// const Div = document.createElement('div')
-// Div.innerHTML = `
-//     <div class="modal fade" id="authorDetalisModal" tabindex="-1" aria-labelledby="authorDetalisModalLabel"
-//     aria-hidden="true">
-//     <div class="modal-dialog">
-//         <div class="modal-content">
-//             <div class="modal-header">
-//                 <h5 class="modal-title" id="authorDetalisModalLabel">Modal title</h5>
-//                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-//             </div>
-//             <div class="modal-body">
-//                 ...
-//             </div>
-//             <div class="modal-footer">
-//                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-//                 <button type="button" class="btn btn-primary">Save changes</button>
-//             </div>
-//         </div>
-//     </div>
-// </div>
-//     `
-// modalBody.appendChild(div)
