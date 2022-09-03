@@ -1,8 +1,12 @@
 const loadAllCetagorys = async (news_id) => {
-    const url = `  https://openapi.programming-hero.com/api/news/categories`
-    const res = await fetch(url)
-    const data = await res.json();
-    seatAllCetagorys(data.data.news_category)
+    try {
+        const url = `  https://openapi.programming-hero.com/api/news/categories`
+        const res = await fetch(url)
+        const data = await res.json();
+        seatAllCetagorys(data.data.news_category)
+    } catch (error) {
+        console.log(error);
+    }
 }
 const seatAllCetagorys = (categories) => {
     const setCategories = document.getElementById('all-category');
@@ -17,10 +21,12 @@ const seatAllCetagorys = (categories) => {
 }
 const showAllNewsData = (category_id) => {
     // console.log(category_id)
+    toggleSpiner(true)
     const url = ` https://openapi.programming-hero.com/api/news/category/${category_id}`
     fetch(url)
         .then(res => res.json())
         .then(data => showAllNews(data.data))
+        .catch(error => console.log(error))
 }
 const showAllNews = data => {
     // console.log(data)
@@ -72,7 +78,7 @@ const showAllNews = data => {
     `;
             newsContainer.appendChild(div)
         });
-
+    toggleSpiner(false)
 }
 const loadModalDetalis = news_id => {
     // console.log(news_id)
@@ -80,6 +86,7 @@ const loadModalDetalis = news_id => {
     fetch(url)
         .then(res => res.json())
         .then(data => displayNews(data.data[0]))
+        .catch(error => console.log(error))
 }
 const displayNews = (data) => {
     console.log(data);
@@ -116,6 +123,14 @@ const displayNews = (data) => {
     
     `
     modalBody.appendChild(div)
+}
+const toggleSpiner = isLoding => {
+    const loaderSection = document.getElementById('loader');
+    if (isLoding === true) {
+        loaderSection.classList.remove('d-none')
+    } else {
+        loaderSection.classList.add('d-none')
+    }
 }
 showAllNewsData()
 loadAllCetagorys()
