@@ -20,7 +20,7 @@ const seatAllCetagorys = (categories) => {
     }
 }
 const showAllNewsData = (category_id) => {
-    // console.log(category_id)
+    // loader start
     toggleSpiner(true)
     const url = ` https://openapi.programming-hero.com/api/news/category/${category_id}`
     fetch(url)
@@ -29,19 +29,15 @@ const showAllNewsData = (category_id) => {
         .catch(error => console.log(error))
 }
 const showAllNews = data => {
-    // console.log(data)
+    // sorting by largest
     data.sort((a, b) => {
         return b.total_view - a.total_view
     })
-    // console.log(data)
-
-
     const resultFound = document.getElementById('result-found');
-    resultFound.innerHTML = `<p class="text-center fs-3 fst-italic text-info">Totat News Found:${data.length}</p>`
+    resultFound.innerHTML = `<p class="text-center fs-3 fst-italic text-primary">Totat News Found:${data.length}</p>`
     const newsContainer = document.getElementById('news-container');
     newsContainer.textContent = ' ',
         data.forEach(news => {
-            // console.log(news)
             const {
                 details,
                 _id,
@@ -51,15 +47,6 @@ const showAllNews = data => {
                 total_view,
                 image_url
             } = news;
-            // console.log(_id)
-            // const viewArray= total_view;
-            // // if (viewArray.indexOf(total_view) === -1) {
-            // //     viewArray.push(total_view);
-            // // }
-            // viewArray.sort(function (a, b) {
-            //     return b - a
-            // });
-            // console.log(viewArray)
             const div = document.createElement('div')
             div.innerHTML = `<div class="row g-0">
     <div class="col-md-4">
@@ -69,7 +56,7 @@ const showAllNews = data => {
         <div class="card-body">
             <h5 class="card-title">${title}</h5>
             <p class="card-text">${details.length>500?details.slice(0,400)+ '..'+'See more...':details}</p>
-            <div class="d-flex justify-content-center ">
+            <div class="d-flex justify-content-between ">
             <div>
             <div>
             <img style="height:10%;width:10%;" class="rounded-circle" src="${author.img?author.img:'No image Found'}">
@@ -92,6 +79,7 @@ const showAllNews = data => {
     `;
             newsContainer.appendChild(div)
         });
+    // loader stop
     toggleSpiner(false)
 }
 const loadModalDetalis = news_id => {
@@ -121,7 +109,7 @@ const displayNews = (data) => {
                     <div>
                     <img src="${image_url}" class="img-fluid rounded-start" alt="..."></div>
                     <p class="card-text">${details.length>300?details.slice(0,300)+ '..'+'...':details}</p>
-                    <div class="d-flex justify-content-center ">
+                    <div class="d-flex justify-content-between">
             <div>
             <div>
             <img style="height:10%;width:10%;" class="rounded-circle" src="${author.img?author.img:'No image Found'}">
@@ -132,10 +120,7 @@ const displayNews = (data) => {
             <div>
              <h6>View:${total_view}</h6>
             </div>
-
-                    
-    
-    `
+    `;
     modalBody.appendChild(div)
 }
 const toggleSpiner = isLoding => {
@@ -146,8 +131,6 @@ const toggleSpiner = isLoding => {
         loaderSection.classList.add('d-none')
     }
 }
-showAllNewsData()
+loadModalDetalis('01')
+// showAllNewsData()
 loadAllCetagorys()
-// const loadAllNews = (newsId) => {
-//     const url = ` https://openapi.programming-hero.com/api/news/0282e0e58a5c404fbd15261f11c2ab6a`
-//     fetch(url)
